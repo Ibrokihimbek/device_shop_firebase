@@ -9,8 +9,7 @@ class CategoriesViewModel extends ChangeNotifier {
 
 //  List<CategoryModel> categories = [];
 
-  Stream<List<CategoryModel>> listenCategories() =>
-      categoryRepository.getCategories();
+  Stream<List<CategoryModel>> listenCategories() => categoryRepository.getCategories();
 
   addCategory(CategoryModel categoryModel) =>
       categoryRepository.addCategory(categoryModel: categoryModel);

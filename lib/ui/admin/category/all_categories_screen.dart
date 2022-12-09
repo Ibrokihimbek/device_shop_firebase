@@ -63,10 +63,10 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                             icon: const Icon(Icons.edit)),
                         IconButton(
                             onPressed: () {
-                              Provider.of<CategoriesViewModel>(context,
-                                      listen: false)
-                                  .deleteCategory(category.categoryId);
-
+                              Provider.of<CategoriesViewModel>(
+                                context,
+                                listen: false,
+                              ).deleteCategory(category.categoryId);
                               print("DELETING ID:${category.categoryId}");
                             },
                             icon: const Icon(Icons.delete)),

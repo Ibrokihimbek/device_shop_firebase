@@ -11,7 +11,7 @@ class CategoryRepository {
   Future<void> addCategory({required CategoryModel categoryModel}) async {
     try {
       DocumentReference newCategory =
-          await _firestore.collection("categories").add(categoryModel.toJson());
+      await _firestore.collection("categories").add(categoryModel.toJson());
       await _firestore.collection("categories").doc(newCategory.id).update({
         "categoryId": newCategory.id,
       });

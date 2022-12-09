@@ -64,7 +64,7 @@ InputDecoration getInputDecoration({required String label}) {
   return InputDecoration(
     labelText: label,
     labelStyle: MyTextStyle.sfProRegular.copyWith(
-      color: MyColors.white,
+      color: MyColors.black,
       fontSize: 16,
     ),
     border: const OutlineInputBorder(
@@ -74,10 +74,10 @@ InputDecoration getInputDecoration({required String label}) {
       ),
     ),
     enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: Colors.white)),
+        borderSide: BorderSide(width: 1, color: Colors.black)),
     focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: Colors.white)),
+        borderSide: BorderSide(width: 1, color: Colors.black)),
     errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: Colors.white)),
+        borderSide: BorderSide(width: 1, color: Colors.black)),
   );
 }

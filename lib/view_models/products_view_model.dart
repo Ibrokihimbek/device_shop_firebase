@@ -7,18 +7,22 @@ import 'package:flutter/material.dart';
 class ProductViewModel extends ChangeNotifier {
   final ProductRepository productRepository;
 
-  ProductViewModel({required this.productRepository});
+  ProductViewModel({required this.productRepository}) {
+    listenProducts("");
+  }
 
   late StreamSubscription subscription;
 
   List<ProductModel> products = [];
 
-  listenProducts() async {
-    subscription = productRepository.getProducts().listen((allProducts) {
+  listenProducts(String categoryId) async {
+    subscription = productRepository
+        .getProducts(categoryId: categoryId)
+        .listen((allProducts) {
+      print("ALL PRODUCTS LENGTH:${allProducts.length}");
       products = allProducts;
       notifyListeners();
-    })
-      ..onError((er) {});
+    });
   }
 
   addProduct(ProductModel productModel) =>
