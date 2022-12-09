@@ -125,7 +125,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   Provider.of<ProductViewModel>(context,listen: false).addProduct(productModel);
                 },
                 child: Text("Add Product to Fire Store"),
-              )
+              ),
             ],
           ),
         ),

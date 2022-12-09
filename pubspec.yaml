@@ -20,7 +20,7 @@ dependencies:
   fluttertoast: ^8.1.1
   carousel_slider: ^4.1.1
   file_picker: ^5.0.1
-  image_picker: ^0.8.5+3
+  image_picker: ^0.8.6
   email_validator: '^2.1.16'
   flutter_svg: ^1.1.1+1
   lottie: ^1.4.3

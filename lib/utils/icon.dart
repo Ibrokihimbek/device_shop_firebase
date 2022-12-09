@@ -3,6 +3,6 @@ class MyIcons {
   static const categ = "assets/svg/categ.svg";
   //.png files
   //.jpg files
-  static const imageSample = "assets/images/image_sample.svg";
+  static const imageSample = "assets/images/image_sample.jpg";
 //.lottie
 }
