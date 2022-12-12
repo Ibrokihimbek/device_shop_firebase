@@ -4,6 +4,7 @@ import 'package:device_shop_firebase/data/services/file_uploader.dart';
 import 'package:device_shop_firebase/ui/admin/admin_screen.dart';
 import 'package:device_shop_firebase/utils/icon.dart';
 import 'package:device_shop_firebase/view_models/categories_view_model.dart';
+import 'package:device_shop_firebase/view_models/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,40 +38,46 @@ class _ProfilePageState extends State<ProfilePage> {
               icon: const Icon(Icons.settings))
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("${FirebaseAuth.instance.currentUser?.email.toString()}"),
-          Text("${FirebaseAuth.instance.currentUser?.uid.toString()}"),
-          Text("${FirebaseAuth.instance.currentUser?.displayName.toString()}"),
-          isLoading?CircularProgressIndicator():SizedBox(),
-
-          Container(
-            decoration: BoxDecoration(shape: BoxShape.circle),
-            width: 100,
-            height: 100,
-            child: imageUrl.isEmpty
-                ? Image.asset(
-                    MyIcons.imageSample,
-                    fit: BoxFit.cover,
-                  )
-                : Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _showPicker(context);
-            },
-            child: Text("Select Image"),
-          )
-        ],
+      body: Consumer<ProfileViewModel>(
+        builder: (context, profileViewModel, child) {
+          return profileViewModel.user != null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextButton(onPressed: (){
+                      FirebaseAuth.instance.signOut();
+                    }, child: Text("Log Out")),
+                    Text(profileViewModel.user!.email.toString()),
+                    Text(profileViewModel.user!.uid.toString()),
+                    Text(profileViewModel.user!.displayName.toString()),
+                    isLoading ? CircularProgressIndicator() : SizedBox(),
+                    Container(
+                      decoration: BoxDecoration(shape: BoxShape.circle),
+                      width: 100,
+                      height: 100,
+                      child: profileViewModel.user!.photoURL == null
+                          ? Image.asset(
+                              MyIcons.imageSample,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              profileViewModel.user!.photoURL!,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _showPicker(context);
+                      },
+                      child: Text("Select Image"),
+                    )
+                  ],
+                )
+              : Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
-
-
 
   void _showPicker(context) {
     showModalBottomSheet(
@@ -109,11 +116,15 @@ class _ProfilePageState extends State<ProfilePage> {
     if (pickedFile != null) {
       if (!mounted) return;
       setState(() {
-        isLoading  = true;
+        isLoading = true;
       });
+      if (!mounted) return;
       imageUrl = await FileUploader.imageUploader(pickedFile);
+      if (!mounted) return;
+      Provider.of<ProfileViewModel>(context, listen: false)
+          .updatePhoto(imageUrl);
       setState(() {
-        isLoading  = false;
+        isLoading = false;
         _image = pickedFile;
       });
     }
@@ -127,7 +138,9 @@ class _ProfilePageState extends State<ProfilePage> {
     );
     if (pickedFile != null) {
       if (!mounted) return;
-      imageUrl = await  FileUploader.imageUploader(pickedFile);
+      imageUrl = await FileUploader.imageUploader(pickedFile);
+      if (!mounted) return;
+      Provider.of<ProfileViewModel>(context, listen: false).updatePhoto(imageUrl);
       setState(() {
         _image = pickedFile;
       });

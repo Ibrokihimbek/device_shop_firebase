@@ -1,4 +1,5 @@
 import 'package:device_shop_firebase/data/models/category.dart';
+import 'package:device_shop_firebase/ui/tab_box/hom_page/info_page.dart';
 import 'package:device_shop_firebase/view_models/categories_view_model.dart';
 import 'package:device_shop_firebase/view_models/products_view_model.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,16 @@ class _HomePageState extends State<HomePage> {
                   var product = productViewModel.products[index];
                   return ListTile(
                     title: Text(product.productName),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => InfoPage(
+                            productModel: product,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 }),
               );

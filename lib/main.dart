@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_shop_firebase/data/repositories/auth_repository.dart';
 import 'package:device_shop_firebase/data/repositories/categories_repository.dart';
+import 'package:device_shop_firebase/data/repositories/orders_repository.dart';
 import 'package:device_shop_firebase/data/repositories/product_repository.dart';
+import 'package:device_shop_firebase/data/repositories/profile_repository.dart';
 import 'package:device_shop_firebase/ui/auth/auth_page.dart';
 import 'package:device_shop_firebase/ui/tab_box/tab_box.dart';
 import 'package:device_shop_firebase/view_models/auth_view_model.dart';
 import 'package:device_shop_firebase/view_models/categories_view_model.dart';
+import 'package:device_shop_firebase/view_models/orders_view_model.dart';
 import 'package:device_shop_firebase/view_models/products_view_model.dart';
+import 'package:device_shop_firebase/view_models/profile_view_model.dart';
 import 'package:device_shop_firebase/view_models/tab_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,6 +37,19 @@ void main() async {
             productRepository: ProductRepository(
               firebaseFirestore: fireStore,
             ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => OrdersViewModel(
+            ordersRepository: OrdersRepository(
+              firebaseFirestore: fireStore,
+            ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileViewModel(
+            firebaseAuth: FirebaseAuth.instance,
+            profileRepository: ProfileRepository(firebaseFirestore: fireStore)
           ),
         ),
         Provider(
