@@ -25,9 +25,9 @@ class _CardPageState extends State<CardPage> {
               return ListTile(
                 title: Text(order.productName),
                 onTap: () {
-                  orderViewModel.getSingleOrder(order.orderId);
+                  orderViewModel.getSingleProduct(order.productId);
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (builder) => CardInfo()));
+                      MaterialPageRoute(builder: (builder) => CardInfo(orderModel: order,)));
                 },
                 trailing: Text("Count:${order.count}"),
               );

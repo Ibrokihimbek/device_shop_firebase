@@ -1,9 +1,11 @@
+import 'package:device_shop_firebase/data/models/order_model.dart';
 import 'package:device_shop_firebase/view_models/orders_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CardInfo extends StatelessWidget {
-  const CardInfo({Key? key}) : super(key: key);
+  const CardInfo({Key? key, required this.orderModel}) : super(key: key);
+  final OrderModel orderModel;
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +15,17 @@ class CardInfo extends StatelessWidget {
         ),
         body: Consumer<OrdersViewModel>(
           builder: (context, orderViewModel, child) {
-            if (orderViewModel.orderModelForInfo != null) {
-              var order = orderViewModel.orderModelForInfo!;
+            if (orderViewModel.productModel != null) {
+              var product = orderViewModel.productModel!;
               return Column(
                 children: [
-                  Text(order.orderStatus),
-                  Text(order.createdAt),
-                  Text(order.count.toString()),
-                  Text(order.totalPrice.toString()),
+                  Text(orderModel.orderStatus),
+                  Text(orderModel.createdAt),
+                  Text(orderModel.count.toString()),
+                  Text(orderModel.totalPrice.toString()),
+                  Text(product.price.toString()),
+                  Image.network(product.productImages[0]),
+                  Text(product.description),
                 ],
               );
             } else {
