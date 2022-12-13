@@ -1,12 +1,9 @@
 import 'dart:io';
 
 import 'package:device_shop_firebase/data/services/file_uploader.dart';
-import 'package:device_shop_firebase/ui/admin/admin_screen.dart';
 import 'package:device_shop_firebase/utils/icon.dart';
-import 'package:device_shop_firebase/view_models/categories_view_model.dart';
 import 'package:device_shop_firebase/view_models/profile_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,14 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AdminScreen()));
-              },
-              icon: const Icon(Icons.settings))
-        ],
       ),
       body: Consumer<ProfileViewModel>(
         builder: (context, profileViewModel, child) {
