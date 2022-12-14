@@ -9,6 +9,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key, required this.onClickedSignIn}) : super(key: key);
@@ -122,15 +123,17 @@ class _SignUpPageState extends State<SignUpPage> {
         email: email,
         password: password,
       );
-      Provider.of<ProfileViewModel>(context,listen: false).addUser(
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      Provider.of<ProfileViewModel>(context, listen: false).addUser(
         UserModel(
-          age: 0,
-          userId: FirebaseAuth.instance.currentUser!.uid,
-          fullName: "",
-          email: email,
-          createdAt: DateTime.now().toString(),
-          imageUrl: "",
-        ),
+            docId: "",
+            age: 0,
+            userId: FirebaseAuth.instance.currentUser!.uid,
+            fullName: "",
+            email: email,
+            createdAt: DateTime.now().toString(),
+            imageUrl: "",
+            fcmToken: fcmToken ?? ""),
       );
     } else {
       MyUtils.getMyToast(message: "Passwords don't match!");

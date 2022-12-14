@@ -14,9 +14,16 @@ class ProfileViewModel extends ChangeNotifier {
       : _firebaseAuth = firebaseAuth,
         _profileRepository = profileRepository {
     listenUser();
+    fetchUser();
   }
 
   User? user;
+  UserModel? userModel;
+
+  fetchUser() async {
+    userModel = await _profileRepository.getSingleUser(
+        userId: FirebaseAuth.instance.currentUser!.uid);
+  }
 
   Stream<User?> getCurrentUser() => _firebaseAuth.authStateChanges();
 
@@ -37,4 +44,7 @@ class ProfileViewModel extends ChangeNotifier {
   }
 
   updatePhoto(String photo) => _firebaseAuth.currentUser!.updatePhotoURL(photo);
+
+  updateFCMToken(String fcmToken, String docId) =>
+      _profileRepository.updateUserFCMToken(fcmToken: fcmToken, docId: docId);
 }

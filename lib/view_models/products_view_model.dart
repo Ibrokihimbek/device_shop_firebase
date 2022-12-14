@@ -27,14 +27,6 @@ class ProductViewModel extends ChangeNotifier {
     });
   }
 
-  addProduct(ProductModel productModel) =>
-      productRepository.addProduct(productModel: productModel);
-
-  updateProduct(ProductModel productModel) =>
-      productRepository.updateProduct(productModel: productModel);
-
-  deleteProduct(String docId) => productRepository.deleteProduct(docId: docId);
-
   @override
   void dispose() {
     subscription.cancel();
